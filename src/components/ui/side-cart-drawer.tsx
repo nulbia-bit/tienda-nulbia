@@ -1,7 +1,12 @@
 "use client";
 import { Drawer } from "vaul";
 import { X, ShoppingBag, Minus, Plus, Trash2 } from "lucide-react";
-import { createCheckout } from "@/lib/shopify";
+// URLs hardcodeadas: sin funciones, sin router, sin abstracción
+const CHECKOUT_URLS: Record<string, string> = {
+  "gid://shopify/ProductVariant/7881254928427": "https://nulbia.myshopify.com/cart/7881254928427:1",
+  "gid://shopify/ProductVariant/7881256009771": "https://nulbia.myshopify.com/cart/7881256009771:1",
+  "gid://shopify/ProductVariant/7881256665131": "https://nulbia.myshopify.com/cart/7881256665131:1",
+};
 
 export interface CartItem {
   variantId: string;
@@ -35,8 +40,11 @@ export function SideCartDrawer({
   );
   const savings = totalOriginal - total;
 
-  // URL de checkout directo para el primer producto del carrito
-  const checkoutUrl = items.length > 0 ? createCheckout(items[0].variantId) : "#";
+  // URL de checkout: lookup directo en el mapa hardcodeado
+  const checkoutUrl =
+    items.length > 0
+      ? (CHECKOUT_URLS[items[0].variantId] ?? "https://nulbia.myshopify.com/cart/7881254928427:1")
+      : "https://nulbia.myshopify.com/cart/7881254928427:1";
 
   return (
     <Drawer.Root
@@ -147,15 +155,16 @@ export function SideCartDrawer({
                 <span className="font-semibold text-slate-700 text-sm">Total</span>
                 <span className="font-black text-slate-900 text-lg">{total.toFixed(2)}€</span>
               </div>
-              {/* <a> puro: fuerza salida del dominio hacia Shopify, sin Next.js router */}
               <a
                 href={checkoutUrl}
                 target="_top"
-                rel="noopener"
-                className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
+                rel="noopener noreferrer"
+                className="w-full"
               >
-                <ShoppingBag className="h-4 w-4" />
-                Finalizar compra
+                <button className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2">
+                  <ShoppingBag className="h-4 w-4" />
+                  Finalizar compra
+                </button>
               </a>
               <p className="text-center text-xs text-slate-400">
                 Pago seguro · Envío gratis en 24h
