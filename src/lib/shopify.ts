@@ -46,7 +46,13 @@ export async function createCheckout(variantId: string): Promise<string | null> 
       return null;
     }
 
-    return data?.cartCreate?.cart?.checkoutUrl ?? null;
+    const rawUrl: string | null = data?.cartCreate?.cart?.checkoutUrl ?? null;
+    if (!rawUrl) return null;
+
+    // Shopify devuelve checkoutUrl con el dominio primario de la tienda (nulbia.com).
+    // Reemplazamos por nulbia.myshopify.com para que el navegador vaya directamente
+    // al checkout de Shopify sin pasar por Next.js (que no tiene esa ruta → 404).
+    return rawUrl.replace("https://nulbia.com", "https://nulbia.myshopify.com");
   } catch (err) {
     console.error("Shopify cart error:", err);
     return null;
