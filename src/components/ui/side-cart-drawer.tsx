@@ -155,20 +155,14 @@ export function SideCartDrawer({
                 <span className="font-semibold text-slate-700 text-sm">Total</span>
                 <span className="font-black text-slate-900 text-lg">{total.toFixed(2)}€</span>
               </div>
-              <a
-                href={checkoutUrl}
-                target="_top"
-                rel="noopener noreferrer"
-                className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2 block"
-                onClick={(e) => {
-                  // Belt-and-suspenders: si el <a> no navega, forzamos con window
-                  e.stopPropagation();
-                  window.location.href = checkoutUrl;
-                }}
+              <button
+                type="button"
+                onClick={() => window.open(checkoutUrl, "_top")}
+                className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2"
               >
                 <ShoppingBag className="h-4 w-4" />
                 Finalizar compra
-              </a>
+              </button>
               <p className="text-center text-xs text-slate-400">
                 Pago seguro · Envío gratis en 24h
               </p>

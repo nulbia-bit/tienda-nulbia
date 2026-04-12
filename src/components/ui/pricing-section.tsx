@@ -25,16 +25,11 @@ export default function PricingSection({ plans }: PricingSectionProps) {
   const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleBuy = async (plan: PricingPlan, index: number) => {
+  const handleBuy = (plan: PricingPlan, index: number) => {
     setLoadingIndex(index);
     setErrorMsg(null);
-    const url = await createCheckout(plan.shopifyProductId);
-    if (url) {
-      window.location.href = url;
-    } else {
-      setErrorMsg("Error al conectar con la tienda. Inténtalo de nuevo.");
-      setLoadingIndex(null);
-    }
+    const url = createCheckout(plan.shopifyProductId);
+    window.open(url, "_top");
   };
 
   return (

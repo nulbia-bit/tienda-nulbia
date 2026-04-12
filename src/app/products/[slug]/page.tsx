@@ -279,14 +279,10 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
     setCartOpen(true);
   };
 
-  const handleBuyNow = async () => {
+  const handleBuyNow = () => {
     setLoading(true);
-    const url = await createCheckout(product.variantId);
-    if (url) {
-      window.location.href = url;
-    } else {
-      setLoading(false);
-    }
+    const url = createCheckout(product.variantId);
+    window.open(url, "_top");
   };
 
   const handleQtyChange = (variantId: string, qty: number) => {
