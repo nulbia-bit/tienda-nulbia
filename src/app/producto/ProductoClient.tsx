@@ -15,7 +15,7 @@ import { Stepper }            from "@/components/ui/stepper";
 import { AccordionFAQ }       from "@/components/ui/accordion-faq";
 import { TestimonialSlider }  from "@/components/ui/testimonial-slider";
 import { SideCartDrawer, CartItem } from "@/components/ui/side-cart-drawer";
-import { VARIANT_IDS } from "@/lib/shopify";
+import { VARIANT_IDS, CHECKOUT_URLS } from "@/lib/shopify";
 import { cn } from "@/lib/utils";
 
 // ─── Pack config ──────────────────────────────────────────────────────────────
@@ -29,6 +29,7 @@ const PACK_CONFIG: Record<PackKey, {
   price: number;
   originalPrice: number;
   variantId: string;
+  checkoutUrl: string;
   badge: string | null;
 }> = {
   individual: {
@@ -38,6 +39,7 @@ const PACK_CONFIG: Record<PackKey, {
     price: 149,
     originalPrice: 199,
     variantId: VARIANT_IDS.oneUnit,
+    checkoutUrl: CHECKOUT_URLS.oneUnit,
     badge: null,
   },
   pareja: {
@@ -47,6 +49,7 @@ const PACK_CONFIG: Record<PackKey, {
     price: 249,
     originalPrice: 458,
     variantId: VARIANT_IDS.twoUnits,
+    checkoutUrl: CHECKOUT_URLS.twoUnits,
     badge: "Más popular",
   },
   familiar: {
@@ -56,6 +59,7 @@ const PACK_CONFIG: Record<PackKey, {
     price: 349,
     originalPrice: 597,
     variantId: VARIANT_IDS.threeUnits,
+    checkoutUrl: CHECKOUT_URLS.threeUnits,
     badge: "Mejor valor",
   },
 };
@@ -137,6 +141,7 @@ export function ProductoClient() {
         ...prev,
         {
           variantId:     p.variantId,
+          checkoutUrl:   p.checkoutUrl,
           title:         p.name,
           subtitle:      p.subtitle,
           price:         p.price,

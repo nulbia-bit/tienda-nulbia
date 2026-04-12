@@ -16,7 +16,7 @@ import { Stepper } from "@/components/ui/stepper";
 import { AccordionFAQ } from "@/components/ui/accordion-faq";
 import { TestimonialSlider } from "@/components/ui/testimonial-slider";
 import { SideCartDrawer, CartItem } from "@/components/ui/side-cart-drawer";
-import { createCheckout, VARIANT_IDS } from "@/lib/shopify";
+import { createCheckout, VARIANT_IDS, CHECKOUT_URLS } from "@/lib/shopify";
 
 // ─── Product catalogue ──────────────────────────────────────────────────────
 
@@ -28,6 +28,7 @@ const PRODUCTS = {
     price: 149,
     originalPrice: 229,
     variantId: VARIANT_IDS.oneUnit,
+    checkoutUrl: CHECKOUT_URLS.oneUnit,
     badge: "Más vendido",
     images: [
       "/producto-1.jpg",
@@ -50,6 +51,7 @@ const PRODUCTS = {
     price: 249,
     originalPrice: 458,
     variantId: VARIANT_IDS.twoUnits,
+    checkoutUrl: CHECKOUT_URLS.twoUnits,
     badge: "Ahorra 45%",
     images: [
       "/producto-1.jpg",
@@ -71,6 +73,7 @@ const PRODUCTS = {
     price: 329,
     originalPrice: 687,
     variantId: VARIANT_IDS.threeUnits,
+    checkoutUrl: CHECKOUT_URLS.threeUnits,
     badge: "Mejor valor",
     images: [
       "/producto-1.jpg",
@@ -267,12 +270,13 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       setCartItems([
         ...cartItems,
         {
-          variantId: product.variantId,
-          title: product.name,
-          price: product.price,
+          variantId:    product.variantId,
+          checkoutUrl:  product.checkoutUrl,
+          title:        product.name,
+          price:        product.price,
           originalPrice: product.originalPrice,
-          quantity: 1,
-          image: product.images[0],
+          quantity:     1,
+          image:        product.images[0],
         },
       ]);
     }
