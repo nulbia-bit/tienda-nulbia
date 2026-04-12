@@ -359,9 +359,9 @@ export default function NulbiaLanding() {
           </FadeUp>
           <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto items-center">
             {[
-              { name:"1 Unidad", price:149, variantId:"gid://shopify/ProductVariant/43919647342635", description:"Para ti · Prueba sin riesgo", popular:false, buttonText:"Probar Nulbia", includes:["1 dispositivo Nulbia Sleep Pro","App con IA personalizada","Seguimiento de calidad de sueño","30 noches de garantía total","Soporte prioritario por chat","Carga magnética inalámbrica"] },
-              { name:"Pack Pareja", price:249, variantId:"gid://shopify/ProductVariant/43919665397803", description:"2 unidades · El más elegido", popular:true, buttonText:"Pedir Pack Pareja", includes:["2 dispositivos Nulbia Sleep Pro","App para ambos con sincronía","Panel de pareja en tiempo real","30 noches de garantía total","Envío express gratuito 24h","Soporte VIP prioritario","Ahorra 49€ vs 2 unidades"] },
-              { name:"Pack Familiar", price:349, variantId:"gid://shopify/ProductVariant/43919674474539", description:"3 unidades · Toda la familia", popular:false, buttonText:"Pedir Pack Familiar", includes:["3 dispositivos Nulbia Sleep Pro","App familiar multiusuario","Historial de sueño 12 meses","30 noches de garantía total","Envío express gratuito 24h","Soporte VIP + línea directa","Ahorra 98€ vs 3 unidades"] },
+              { name:"1 Unidad",     price:149, originalPrice:199, packKey:"individual", description:"Para ti · Prueba sin riesgo",     popular:false, buttonText:"Probar Nulbia",      includes:["1 dispositivo Nulbia Sleep Pro","App con IA personalizada","Seguimiento de calidad de sueño","30 noches de garantía total","Soporte prioritario por chat","Carga magnética inalámbrica"] },
+              { name:"Pack Pareja",  price:249, originalPrice:458, packKey:"pareja",     description:"2 unidades · El más elegido",     popular:true,  buttonText:"Pedir Pack Pareja",  includes:["2 dispositivos Nulbia Sleep Pro","App para ambos con sincronía","Panel de pareja en tiempo real","30 noches de garantía total","Envío express gratuito 24h","Soporte VIP prioritario","Ahorra 209€ vs 2 unidades"] },
+              { name:"Pack Familiar",price:349, originalPrice:597, packKey:"familiar",   description:"3 unidades · Toda la familia",   popular:false, buttonText:"Pedir Pack Familiar",includes:["3 dispositivos Nulbia Sleep Pro","App familiar multiusuario","Historial de sueño 12 meses","30 noches de garantía total","Envío express gratuito 24h","Soporte VIP + línea directa","Ahorra 248€ vs 3 unidades"] },
             ].map((plan, i) => (
               <PricingCard key={i} plan={plan} index={i} />
             ))}
@@ -439,15 +439,19 @@ export default function NulbiaLanding() {
 // ── Pricing card inline ───────────────────────────────────────────────────────
 
 function PricingCard({ plan, index }: { plan: any; index: number }) {
+  const discount = Math.round(((plan.originalPrice - plan.price) / plan.originalPrice) * 100);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" as const }}
       className={cn(
         "relative flex flex-col rounded-3xl border bg-white p-8",
-        plan.popular ? "border-sky-200 shadow-2xl shadow-sky-100 scale-105 z-10" : "border-slate-200 shadow-sm hover:shadow-lg hover:border-sky-100 transition-all"
+        plan.popular
+          ? "border-sky-200 shadow-2xl shadow-sky-100 scale-105 z-10"
+          : "border-slate-200 shadow-sm hover:shadow-lg hover:border-sky-100 transition-all"
       )}
     >
       {plan.popular && (
@@ -457,16 +461,23 @@ function PricingCard({ plan, index }: { plan: any; index: number }) {
       )}
       <h3 className="text-xl font-bold text-slate-900 mb-1">{plan.name}</h3>
       <p className="text-sm text-slate-500 mb-4">{plan.description}</p>
-      <div className="flex items-baseline gap-1 mb-1">
+      <div className="flex items-baseline gap-2 mb-0.5">
         <span className="text-xl font-bold text-slate-400">€</span>
         <span className="text-5xl font-black text-slate-900">{plan.price}</span>
+        <span className="text-sm text-slate-400 line-through self-end pb-1">{plan.originalPrice}€</span>
       </div>
-      <p className="text-xs text-slate-400 mb-6">Pago único · Sin renovación</p>
-      <Link href="/producto" className="w-full mb-6">
+      <div className="flex items-center gap-2 mb-5">
+        <span className="bg-rose-50 text-rose-500 text-xs font-bold px-2 py-0.5 rounded-md">-{discount}%</span>
+        <span className="text-xs text-slate-400">Pago único · Sin renovación</span>
+      </div>
+      {/* Link con ?pack= para preseleccionar la variante en la PDP */}
+      <Link href={`/producto?pack=${plan.packKey}`} className="w-full mb-6">
         <span
           className={cn(
             "w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5",
-            plan.popular ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200" : "bg-slate-100 hover:bg-slate-200 text-slate-900"
+            plan.popular
+              ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200"
+              : "bg-slate-100 hover:bg-slate-200 text-slate-900"
           )}
         >
           {plan.buttonText}
@@ -476,7 +487,10 @@ function PricingCard({ plan, index }: { plan: any; index: number }) {
         <ul className="space-y-2.5">
           {plan.includes.map((f: string, fi: number) => (
             <li key={fi} className="flex items-start gap-2.5">
-              <div className={cn("mt-0.5 w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0", plan.popular ? "bg-sky-500" : "bg-slate-100")}>
+              <div className={cn(
+                "mt-0.5 w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0",
+                plan.popular ? "bg-sky-500" : "bg-slate-100"
+              )}>
                 <Check className={cn("w-2.5 h-2.5", plan.popular ? "text-white" : "text-sky-500")} />
               </div>
               <span className="text-xs text-slate-600">{f}</span>
