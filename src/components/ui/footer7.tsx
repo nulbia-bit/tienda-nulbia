@@ -9,16 +9,16 @@ const footerLinks = {
     { label: "Preguntas frecuentes", href: "#faq" },
   ],
   Legal: [
-    { label: "Política de privacidad", href: "#" },
-    { label: "Términos y condiciones", href: "#" },
-    { label: "Política de cookies", href: "#" },
-    { label: "Aviso legal", href: "#" },
+    { label: "Política de privacidad", href: "/legal/privacidad" },
+    { label: "Términos y condiciones", href: "/legal/terminos" },
+    { label: "Política de cookies", href: "/legal/cookies" },
+    { label: "Aviso legal", href: "/legal/aviso-legal" },
   ],
   Soporte: [
-    { label: "Centro de ayuda", href: "#" },
-    { label: "Contacto", href: "mailto:soporte@nulbia.com" },
-    { label: "Garantía 30 noches", href: "#" },
-    { label: "Devoluciones", href: "#" },
+    { label: "Centro de ayuda", href: "/soporte/centro-de-ayuda" },
+    { label: "Contacto", href: "/soporte/contacto" },
+    { label: "Garantía 30 noches", href: "/soporte/garantia" },
+    { label: "Devoluciones", href: "/soporte/devoluciones" },
   ],
 };
 
