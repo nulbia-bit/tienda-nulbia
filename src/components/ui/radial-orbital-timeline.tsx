@@ -38,12 +38,16 @@ export default function RadialOrbitalTimeline({
     }
   };
 
+  const closeCard = () => {
+    setExpandedItems({});
+    setActiveNodeId(null);
+    setPulseEffect({});
+    setAutoRotate(true);
+  };
+
   const toggleItem = (id: number) => {
     setExpandedItems((prev) => {
       const newState: Record<number, boolean> = {};
-      Object.keys(prev).forEach((key) => {
-        newState[parseInt(key)] = false;
-      });
       const isOpening = !prev[id];
       newState[id] = isOpening;
 
@@ -81,10 +85,11 @@ export default function RadialOrbitalTimeline({
     const y = radius * Math.sin(radian);
     const zIndex = Math.round(100 + 50 * Math.cos(radian));
     const opacity = Math.max(0.45, Math.min(1, 0.45 + 0.55 * ((1 + Math.sin(radian)) / 2)));
-    // true cuando el nodo está en la mitad inferior del orbita
-    const isBottom = y > 40;
-    return { x, y, zIndex, opacity, isBottom };
+    return { x, y, zIndex, opacity };
   };
+
+  // Nodo activo para la tarjeta fija
+  const activeItem = timelineData.find((i) => i.id === activeNodeId);
 
   return (
     <div className="w-full bg-slate-50 py-20">
@@ -102,7 +107,7 @@ export default function RadialOrbitalTimeline({
 
       {/* Orbital */}
       <div
-        className="relative w-full max-w-4xl h-[520px] mx-auto flex items-center justify-center"
+        className="relative w-full max-w-4xl h-[420px] mx-auto flex items-center justify-center"
         ref={containerRef}
         onClick={handleContainerClick}
       >
@@ -111,7 +116,7 @@ export default function RadialOrbitalTimeline({
           ref={orbitRef}
           style={{ perspective: "900px" }}
         >
-          {/* Orbit ring */}
+          {/* Orbit rings */}
           <div className="absolute w-[370px] h-[370px] rounded-full border border-slate-200/70 pointer-events-none" />
           <div className="absolute w-[280px] h-[280px] rounded-full border border-slate-100/80 pointer-events-none" />
 
@@ -125,18 +130,14 @@ export default function RadialOrbitalTimeline({
             </div>
           </div>
 
-          {/* Nodes */}
+          {/* Nodes — solo círculo + label, sin tarjeta inline */}
           {timelineData.map((item, index) => {
             const pos = calculateNodePosition(index, timelineData.length);
             const isExpanded = expandedItems[item.id];
             const currentItem = timelineData.find((i) => i.id === activeNodeId);
-            const isRelated = currentItem
-              ? currentItem.relatedIds.includes(item.id)
-              : false;
+            const isRelated = currentItem?.relatedIds.includes(item.id) ?? false;
             const isPulsing = pulseEffect[item.id];
             const Icon = item.icon;
-            // Capturamos isBottom en el momento del clic para que no cambie mientras está abierto
-            const cardOpensUp = pos.isBottom;
 
             return (
               <div
@@ -147,78 +148,87 @@ export default function RadialOrbitalTimeline({
                   zIndex: isExpanded ? 200 : pos.zIndex,
                   opacity: isExpanded ? 1 : pos.opacity,
                 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleItem(item.id);
-                }}
+                onClick={(e) => { e.stopPropagation(); toggleItem(item.id); }}
               >
                 {/* Node circle */}
-                <div
-                  className={`
-                    w-12 h-12 rounded-full flex items-center justify-center shadow-md border-2
-                    transition-all duration-300
-                    ${isExpanded
-                      ? "bg-sky-500 text-white border-sky-400 shadow-sky-300 scale-125"
-                      : isRelated || isPulsing
-                      ? "bg-sky-50 text-sky-600 border-sky-300 animate-pulse scale-110"
-                      : "bg-white text-slate-600 border-slate-200 hover:border-sky-300 hover:text-sky-500"
-                    }
-                  `}
-                >
+                <div className={`
+                  w-12 h-12 rounded-full flex items-center justify-center shadow-md border-2
+                  transition-all duration-300
+                  ${isExpanded
+                    ? "bg-sky-500 text-white border-sky-400 shadow-sky-300 scale-125"
+                    : isRelated || isPulsing
+                    ? "bg-sky-50 text-sky-600 border-sky-300 animate-pulse scale-110"
+                    : "bg-white text-slate-600 border-slate-200 hover:border-sky-300 hover:text-sky-500"
+                  }
+                `}>
                   <Icon size={18} />
                 </div>
 
                 {/* Label */}
-                <div
-                  className={`
-                    absolute top-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold tracking-wide transition-all duration-300
-                    ${isExpanded ? "text-sky-600 scale-110" : "text-slate-500"}
-                  `}
-                >
+                <div className={`
+                  absolute top-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold tracking-wide transition-all duration-300
+                  ${isExpanded ? "text-sky-600" : "text-slate-500"}
+                `}>
                   {item.title}
                 </div>
 
-                {/* Step number badge */}
+                {/* Badge numérico */}
                 <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-sky-500 text-white text-[10px] font-black flex items-center justify-center shadow-sm">
                   {item.id}
                 </div>
-
-                {/* Expanded card — se abre arriba si el nodo está en la zona inferior */}
-                {isExpanded && (
-                  <div
-                    className={`absolute left-1/2 -translate-x-1/2 w-72 bg-white/98 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl shadow-sky-100/60 p-5 z-[300] ${
-                      cardOpensUp ? "bottom-16" : "top-16"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-7 h-7 rounded-lg bg-sky-50 flex items-center justify-center">
-                        <Icon size={14} className="text-sky-500" />
-                      </div>
-                      <h4 className="text-sm font-bold text-slate-900">{item.title}</h4>
-                    </div>
-                    <p className="text-xs text-slate-600 leading-relaxed">{item.content}</p>
-                    <div className="mt-3 pt-3 border-t border-slate-100 flex gap-1 flex-wrap">
-                      {item.relatedIds.map((rid) => {
-                        const related = timelineData.find((t) => t.id === rid);
-                        return related ? (
-                          <span key={rid} className="text-[10px] bg-sky-50 text-sky-600 border border-sky-100 rounded-full px-2 py-0.5 font-medium">
-                            → {related.title}
-                          </span>
-                        ) : null;
-                      })}
-                    </div>
-                  </div>
-                )}
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* Helper text */}
-      <p className="text-center text-xs text-slate-400 -mt-4">
-        Toca cada nodo para descubrir la fase
-      </p>
+      {/* Tarjeta fija debajo del orbital — siempre visible, nunca se corta */}
+      <div className="px-4 max-w-lg mx-auto mt-2 min-h-[180px]">
+        {activeItem ? (
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-xl shadow-sky-100/40 p-5 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-sky-50 flex items-center justify-center flex-shrink-0">
+                  <activeItem.icon size={16} className="text-sky-500" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-sky-500 font-bold uppercase tracking-widest">
+                    Fase {activeItem.id}
+                  </p>
+                  <h4 className="text-sm font-bold text-slate-900 leading-tight">
+                    {activeItem.title}
+                  </h4>
+                </div>
+              </div>
+              <button
+                onClick={closeCard}
+                className="w-6 h-6 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0"
+              >
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">{activeItem.content}</p>
+            {activeItem.relatedIds.length > 0 && (
+              <div className="mt-3 pt-3 border-t border-slate-100 flex gap-1 flex-wrap">
+                {activeItem.relatedIds.map((rid) => {
+                  const related = timelineData.find((t) => t.id === rid);
+                  return related ? (
+                    <span key={rid} className="text-[10px] bg-sky-50 text-sky-600 border border-sky-100 rounded-full px-2 py-0.5 font-medium">
+                      → {related.title}
+                    </span>
+                  ) : null;
+                })}
+              </div>
+            )}
+          </div>
+        ) : (
+          <p className="text-center text-xs text-slate-400 pt-6">
+            Toca cada nodo para descubrir la fase
+          </p>
+        )}
+      </div>
     </div>
   );
 }
