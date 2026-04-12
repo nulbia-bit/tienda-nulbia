@@ -38,16 +38,11 @@ export function SideCartDrawer({
   );
   const savings = totalOriginal - total;
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (items.length === 0) return;
     setLoading(true);
-    // Use the first item's variantId for checkout
-    const url = await createCheckout(items[0].variantId);
-    if (url) {
-      window.location.href = url;
-    } else {
-      setLoading(false);
-    }
+    const url = createCheckout(items[0].variantId);
+    window.location.href = url;
   };
 
   return (
