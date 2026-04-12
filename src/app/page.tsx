@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { createCheckout } from "@/lib/shopify";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
   Shield,
@@ -19,7 +19,6 @@ import {
   ArrowRight,
   Smile,
   Check,
-  Loader2,
   Sparkles,
 } from "lucide-react";
 
@@ -440,15 +439,6 @@ export default function NulbiaLanding() {
 // ── Pricing card inline ───────────────────────────────────────────────────────
 
 function PricingCard({ plan, index }: { plan: any; index: number }) {
-  const [loading, setLoading] = useState(false);
-
-  const handleBuy = async () => {
-    setLoading(true);
-    const url = await createCheckout(plan.variantId);
-    if (url) window.location.href = url;
-    else setLoading(false);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -472,16 +462,16 @@ function PricingCard({ plan, index }: { plan: any; index: number }) {
         <span className="text-5xl font-black text-slate-900">{plan.price}</span>
       </div>
       <p className="text-xs text-slate-400 mb-6">Pago único · Sin renovación</p>
-      <button
-        onClick={handleBuy}
-        disabled={loading}
-        className={cn(
-          "w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 mb-6 transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed",
-          plan.popular ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200" : "bg-slate-100 hover:bg-slate-200 text-slate-900"
-        )}
-      >
-        {loading ? <><Loader2 className="w-4 h-4 animate-spin" />Procesando...</> : plan.buttonText}
-      </button>
+      <Link href="/producto" className="w-full mb-6">
+        <span
+          className={cn(
+            "w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5",
+            plan.popular ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200" : "bg-slate-100 hover:bg-slate-200 text-slate-900"
+          )}
+        >
+          {plan.buttonText}
+        </span>
+      </Link>
       <div className="border-t border-slate-100 pt-5">
         <ul className="space-y-2.5">
           {plan.includes.map((f: string, fi: number) => (
