@@ -1,7 +1,6 @@
 "use client";
 import { Drawer } from "vaul";
-import { X, ShoppingBag, Loader2, Minus, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { X, ShoppingBag, Minus, Plus, Trash2 } from "lucide-react";
 import { createCheckout } from "@/lib/shopify";
 
 export interface CartItem {
@@ -29,8 +28,6 @@ export function SideCartDrawer({
   onQuantityChange,
   onRemove,
 }: SideCartDrawerProps) {
-  const [loading, setLoading] = useState(false);
-
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalOriginal = items.reduce(
     (sum, item) => sum + (item.originalPrice ?? item.price) * item.quantity,
@@ -38,12 +35,8 @@ export function SideCartDrawer({
   );
   const savings = totalOriginal - total;
 
-  const handleCheckout = () => {
-    if (items.length === 0) return;
-    setLoading(true);
-    const url = createCheckout(items[0].variantId);
-    window.location.href = url;
-  };
+  // URL de checkout directo para el primer producto del carrito
+  const checkoutUrl = items.length > 0 ? createCheckout(items[0].variantId) : "#";
 
   return (
     <Drawer.Root
@@ -154,20 +147,16 @@ export function SideCartDrawer({
                 <span className="font-semibold text-slate-700 text-sm">Total</span>
                 <span className="font-black text-slate-900 text-lg">{total.toFixed(2)}€</span>
               </div>
-              <button
-                onClick={handleCheckout}
-                disabled={loading}
-                className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-70"
+              {/* <a> puro: fuerza salida del dominio hacia Shopify, sin Next.js router */}
+              <a
+                href={checkoutUrl}
+                target="_top"
+                rel="noopener"
+                className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
               >
-                {loading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <ShoppingBag className="h-4 w-4" />
-                    Finalizar compra
-                  </>
-                )}
-              </button>
+                <ShoppingBag className="h-4 w-4" />
+                Finalizar compra
+              </a>
               <p className="text-center text-xs text-slate-400">
                 Pago seguro · Envío gratis en 24h
               </p>
