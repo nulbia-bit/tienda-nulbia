@@ -159,12 +159,15 @@ export function SideCartDrawer({
                 href={checkoutUrl}
                 target="_top"
                 rel="noopener noreferrer"
-                className="w-full"
+                className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2 block"
+                onClick={(e) => {
+                  // Belt-and-suspenders: si el <a> no navega, forzamos con window
+                  e.stopPropagation();
+                  window.location.href = checkoutUrl;
+                }}
               >
-                <button className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2">
-                  <ShoppingBag className="h-4 w-4" />
-                  Finalizar compra
-                </button>
+                <ShoppingBag className="h-4 w-4" />
+                Finalizar compra
               </a>
               <p className="text-center text-xs text-slate-400">
                 Pago seguro · Envío gratis en 24h
