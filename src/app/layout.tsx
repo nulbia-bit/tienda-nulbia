@@ -18,11 +18,11 @@ const orbitron = Orbitron({
 export const metadata: Metadata = {
   title: "Nulbia — Despierta con energía, no con reproches",
   description:
-    "Elimina los ronquidos desde la primera noche con tecnología de conducción ósea. Sin cirugía. Sin pastillas. 30 noches de garantía total.",
+    "Elimina los ronquidos desde la primera noche con Estimulación Muscular Electrónica (EMS). Sin cirugía. Sin pastillas. 30 noches de garantía total.",
   openGraph: {
     title: "Nulbia — Despierta con energía, no con reproches",
     description:
-      "El dispositivo anti-ronquidos más avanzado del mercado. 97% de eficacia. Garantía de 30 noches.",
+      "El Estimulador Muscular Electrónico más avanzado del mercado. 97% de eficacia. Garantía de 30 noches.",
     type: "website",
   },
 };

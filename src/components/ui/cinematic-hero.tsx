@@ -173,7 +173,7 @@ export function CinematicHero({
   cardHeading = "Inteligencia Artificial para tu sueño.",
   cardDescription = (
     <>
-      <span className="text-white font-semibold">Nulbia</span> detecta tus ronquidos en 300 ms y los elimina con micro-vibraciones de conducción ósea —{" "}
+      <span className="text-white font-semibold">Nulbia</span> detecta tus ronquidos en 300 ms y los elimina con Estimulación Muscular Electrónica (EMS, 10Hz–1500Hz) —{" "}
       <span className="text-sky-300">sin despertarte ni molestar a tu pareja.</span>
     </>
   ),

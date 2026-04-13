@@ -77,10 +77,10 @@ const IMAGES = [
 // ─── Static content ───────────────────────────────────────────────────────────
 
 const BENTO_ITEMS = [
-  { icon: <Brain    className="h-5 w-5" />, highlight: "IA",    title: "Inteligencia Artificial Biométrica",   description: "Aprende tu patrón de sueño y ajusta la estimulación ósea en tiempo real para máxima eficacia." },
+  { icon: <Brain    className="h-5 w-5" />, highlight: "EMS",   title: "Estimulación Muscular Electrónica",    description: "Impulsos de frecuencia media (10Hz - 1500Hz) activan los músculos de la garganta para abrir las vías respiratorias automáticamente." },
   { icon: <Moon     className="h-5 w-5" />, highlight: "98%",   title: "Reducción de ronquidos",               description: "En estudios clínicos independientes, el 98% de los usuarios dejaron de roncar desde la primera noche." },
-  { icon: <Mic      className="h-5 w-5" />, highlight: "-36dB", title: "Silencio garantizado",                 description: "La conducción ósea detiene los ronquidos sin despertar al usuario ni a su pareja." },
-  { icon: <Activity className="h-5 w-5" />, highlight: "7h",    title: "Batería ultralarga",                   description: "Carga completa en 60 minutos y aguanta toda la noche sin interrupción." },
+  { icon: <Mic      className="h-5 w-5" />, highlight: "-36dB", title: "Silencio garantizado",                 description: "La estimulación EMS detiene los ronquidos sin despertar al usuario ni a su pareja." },
+  { icon: <Activity className="h-5 w-5" />, highlight: "15h+",  title: "Batería ultralarga",                   description: "Más de 15 horas de uso continuo. Se carga en 2 horas mediante la base de carga incluida." },
   { icon: <Zap      className="h-5 w-5" />, highlight: "0.3s",  title: "Respuesta instantánea",                description: "Detecta y neutraliza el ronquido en menos de 300ms. Tu pareja no sabrá que ocurrió." },
   { icon: <ShieldCheck className="h-5 w-5" />, highlight: "30d", title: "Garantía sin preguntas",              description: "Si no notas resultados en 30 noches, devolvemos el 100% de tu dinero. Sin letra pequeña." },
 ];
@@ -88,7 +88,7 @@ const BENTO_ITEMS = [
 const HOW_IT_WORKS = [
   { number: 1, title: "Colócatelo antes de dormir",  description: "En menos de 30 segundos. Se adapta a cualquier forma de nariz con la almohadilla flexible incluida." },
   { number: 2, title: "La IA detecta el ronquido",   description: "El sensor biométrico identifica las vibraciones características del ronquido con precisión del 99,2%." },
-  { number: 3, title: "La conducción ósea actúa",    description: "Una microestimulación imperceptible relaja los tejidos de la garganta y elimina el ronquido al instante." },
+  { number: 3, title: "La estimulación EMS actúa",   description: "La Estimulación Muscular Electrónica (EMS) activa los músculos de la garganta con impulsos de 10Hz - 1500Hz, abriendo las vías respiratorias al instante." },
   { number: 4, title: "Aprende y mejora cada noche", description: "La IA crea un perfil biométrico personalizado que optimiza la respuesta noche tras noche." },
 ];
 
@@ -102,12 +102,12 @@ const REVIEWS = [
 ];
 
 const FAQ_ITEMS = [
-  { question: "¿Nulbia funciona desde la primera noche?",       answer: "El 94% de los usuarios reportan una reducción significativa desde la primera noche. El dispositivo aprende tu patrón de sueño y mejora con el tiempo." },
-  { question: "¿Es incómodo dormir con él puesto?",             answer: "No. Pesa menos de 12 gramos y se diseñó para ser completamente olvidado durante el sueño. La mayoría dice que en 2-3 noches no lo nota." },
-  { question: "¿Cómo funciona la conducción ósea?",             answer: "Transmite microvibraciones a través del cartílago nasal hasta los tejidos blandos de la garganta, produciendo una leve contracción muscular que abre la vía aérea sin despertar al usuario." },
+  { question: "¿Nulbia funciona desde la primera noche?",       answer: "El 94% de los usuarios reportan una reducción significativa desde la primera noche. El estimulador aprende tu patrón de sueño y mejora con el tiempo." },
+  { question: "¿Es incómodo dormir con él puesto?",             answer: "No. Pesa 11.6 gramos y se diseñó para ser completamente olvidado durante el sueño. La mayoría dice que en 2-3 noches no lo nota." },
+  { question: "¿Cómo funciona la tecnología EMS?",              answer: "La Estimulación Muscular Electrónica (EMS) emite impulsos de frecuencia media (10Hz - 1500Hz) que activan los músculos de la garganta para mantener abiertas las vías respiratorias sin despertar al usuario." },
   { question: "¿Qué pasa si no me funciona?",                   answer: "Tienes 30 noches de garantía total. Si no estás satisfecho, te devolvemos el 100% del importe pagado. Sin preguntas, sin letra pequeña." },
   { question: "¿Es seguro para personas con marcapasos?",       answer: "Nulbia usa microestimulación de baja frecuencia (<1mA). Si llevas marcapasos o tienes condición cardíaca, consulta con tu médico antes de usarlo." },
-  { question: "¿Cuánto dura la batería y cómo se carga?",       answer: "7-9 horas de batería, suficiente para una noche completa. Carga USB-C en 60 minutos. Cable y cargador incluidos." },
+  { question: "¿Cuánto dura la batería y cómo se carga?",       answer: "Más de 15 horas de uso continuo. Se carga en 2 horas mediante la base de carga incluida." },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -224,7 +224,7 @@ export function ProductoClient() {
                 Nulbia Sleep Pro
               </h1>
               <p className="text-slate-500 mt-1.5 text-base">
-                Elimina los ronquidos con IA + conducción ósea
+                Estimulador Muscular Electrónico inteligente · Solución avanzada para el tratamiento de ronquidos
               </p>
             </div>
 

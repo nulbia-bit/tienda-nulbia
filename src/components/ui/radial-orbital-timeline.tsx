@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, type ElementType } from "react";
+import { useState, useEffect, useRef, useCallback, type ElementType } from "react";
 
 export interface TimelineItem {
   id: number;
@@ -16,79 +16,99 @@ interface RadialOrbitalTimelineProps {
   subtitle?: string;
 }
 
+const RADIUS = 185;
+
+function calcPos(index: number, total: number, angleDeg: number) {
+  const deg = ((index / total) * 360 + angleDeg) % 360;
+  const rad = (deg * Math.PI) / 180;
+  return {
+    x: RADIUS * Math.cos(rad),
+    y: RADIUS * Math.sin(rad),
+    zIndex: Math.round(100 + 50 * Math.cos(rad)),
+    opacity: Math.max(0.45, Math.min(1, 0.45 + 0.55 * ((1 + Math.sin(rad)) / 2))),
+  };
+}
+
 export default function RadialOrbitalTimeline({
   timelineData,
   title = "El Ciclo del Sueño Inteligente",
   subtitle = "Cinco fases de protección activa cada noche que duermes con Nulbia",
 }: RadialOrbitalTimelineProps) {
-  const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
-  const [rotationAngle, setRotationAngle] = useState(0);
-  const [autoRotate, setAutoRotate] = useState(true);
-  const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
-  const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const orbitRef = useRef<HTMLDivElement>(null);
+  // React state sólo para interacciones — NO para el ángulo de rotación
+  const [expandedItems, setExpandedItems]   = useState<Record<number, boolean>>({});
+  const [pulseEffect,   setPulseEffect]     = useState<Record<number, boolean>>({});
+  const [activeNodeId,  setActiveNodeId]    = useState<number | null>(null);
 
-  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === containerRef.current || e.target === orbitRef.current) {
-      setExpandedItems({});
-      setActiveNodeId(null);
-      setPulseEffect({});
-      setAutoRotate(true);
+  // Refs para la animación RAF — nunca provocan re-renders
+  const nodeRefs      = useRef<(HTMLDivElement | null)[]>([]);
+  const angleRef      = useRef(0);
+  const autoRotate    = useRef(true);
+  const rafId         = useRef(0);
+  // Espejo de expandedItems accesible síncronamente desde el loop RAF
+  const expandedRef   = useRef<Record<number, boolean>>({});
+
+  // ── Loop de animación — DOM directo, sin setState ─────────────────────────
+  const tick = useCallback(() => {
+    if (autoRotate.current) {
+      angleRef.current = (angleRef.current + 0.3) % 360;
     }
-  };
 
-  const closeCard = () => {
+    timelineData.forEach((item, index) => {
+      const el = nodeRefs.current[index];
+      if (!el) return;
+      const { x, y, zIndex, opacity } = calcPos(index, timelineData.length, angleRef.current);
+      // transform siempre se actualiza (movimiento fluido a 60fps)
+      el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
+      // opacity y zIndex sólo si el nodo no está expandido (el activo queda fijo)
+      if (!expandedRef.current[item.id]) {
+        el.style.zIndex  = String(zIndex);
+        el.style.opacity = opacity.toFixed(3);
+      }
+    });
+
+    rafId.current = requestAnimationFrame(tick);
+  }, [timelineData]);
+
+  useEffect(() => {
+    rafId.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId.current);
+  }, [tick]);
+
+  // ── Handlers ──────────────────────────────────────────────────────────────
+  const resetAll = () => {
     setExpandedItems({});
     setActiveNodeId(null);
     setPulseEffect({});
-    setAutoRotate(true);
+    expandedRef.current = {};
+    autoRotate.current  = true;
   };
 
   const toggleItem = (id: number) => {
     setExpandedItems((prev) => {
-      const newState: Record<number, boolean> = {};
-      const isOpening = !prev[id];
-      newState[id] = isOpening;
+      const isOpening      = !prev[id];
+      const newExpanded    = isOpening ? { [id]: true } : {};
+      expandedRef.current  = newExpanded;
 
       if (isOpening) {
         setActiveNodeId(id);
-        setAutoRotate(false);
-        const currentItem = timelineData.find((item) => item.id === id);
-        const newPulse: Record<number, boolean> = {};
-        currentItem?.relatedIds.forEach((relId) => {
-          newPulse[relId] = true;
-        });
-        setPulseEffect(newPulse);
+        autoRotate.current = false;
+        const item = timelineData.find((i) => i.id === id);
+        setPulseEffect(
+          Object.fromEntries((item?.relatedIds ?? []).map((r) => [r, true]))
+        );
+        // Fijar visualmente el nodo activo
+        const idx = timelineData.findIndex((i) => i.id === id);
+        const el  = nodeRefs.current[idx];
+        if (el) { el.style.opacity = "1"; el.style.zIndex = "200"; }
       } else {
         setActiveNodeId(null);
-        setAutoRotate(true);
+        autoRotate.current = true;
         setPulseEffect({});
       }
-      return newState;
+      return newExpanded;
     });
   };
 
-  useEffect(() => {
-    if (!autoRotate) return;
-    const timer = setInterval(() => {
-      setRotationAngle((prev) => Number(((prev + 0.25) % 360).toFixed(3)));
-    }, 50);
-    return () => clearInterval(timer);
-  }, [autoRotate]);
-
-  const calculateNodePosition = (index: number, total: number) => {
-    const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 185;
-    const radian = (angle * Math.PI) / 180;
-    const x = radius * Math.cos(radian);
-    const y = radius * Math.sin(radian);
-    const zIndex = Math.round(100 + 50 * Math.cos(radian));
-    const opacity = Math.max(0.45, Math.min(1, 0.45 + 0.55 * ((1 + Math.sin(radian)) / 2)));
-    return { x, y, zIndex, opacity };
-  };
-
-  // Nodo activo para la tarjeta fija
   const activeItem = timelineData.find((i) => i.id === activeNodeId);
 
   return (
@@ -108,12 +128,13 @@ export default function RadialOrbitalTimeline({
       {/* Orbital */}
       <div
         className="relative w-full max-w-4xl h-[420px] mx-auto flex items-center justify-center"
-        ref={containerRef}
-        onClick={handleContainerClick}
+        onClick={(e) => {
+          const t = e.target as Node;
+          if (!nodeRefs.current.some((el) => el?.contains(t))) resetAll();
+        }}
       >
         <div
           className="absolute w-full h-full flex items-center justify-center"
-          ref={orbitRef}
           style={{ perspective: "900px" }}
         >
           {/* Orbit rings */}
@@ -130,50 +151,54 @@ export default function RadialOrbitalTimeline({
             </div>
           </div>
 
-          {/* Nodes — solo círculo + label, sin tarjeta inline */}
+          {/* Nodos — posición gestionada 100% por RAF, sin CSS transition en transform */}
           {timelineData.map((item, index) => {
-            const pos = calculateNodePosition(index, timelineData.length);
             const isExpanded = expandedItems[item.id];
-            const currentItem = timelineData.find((i) => i.id === activeNodeId);
-            const isRelated = currentItem?.relatedIds.includes(item.id) ?? false;
-            const isPulsing = pulseEffect[item.id];
-            const Icon = item.icon;
+            const activeItem_ = timelineData.find((i) => i.id === activeNodeId);
+            const isRelated  = activeItem_?.relatedIds.includes(item.id) ?? false;
+            const isPulsing  = pulseEffect[item.id];
+            const Icon       = item.icon;
+            // Posición inicial en el primer render (RAF la toma enseguida)
+            const init = calcPos(index, timelineData.length, angleRef.current);
 
             return (
               <div
                 key={item.id}
-                className="absolute transition-all duration-700 cursor-pointer"
+                ref={(el) => { nodeRefs.current[index] = el; }}
+                className="absolute cursor-pointer"
                 style={{
-                  transform: `translate(${pos.x}px, ${pos.y}px)`,
-                  zIndex: isExpanded ? 200 : pos.zIndex,
-                  opacity: isExpanded ? 1 : pos.opacity,
+                  transform:   `translate(${init.x.toFixed(1)}px,${init.y.toFixed(1)}px)`,
+                  willChange:  "transform",
+                  // zIndex y opacity NO se declaran aquí → RAF los controla sin interferencia de React
                 }}
                 onClick={(e) => { e.stopPropagation(); toggleItem(item.id); }}
               >
-                {/* Node circle */}
-                <div className={`
-                  w-12 h-12 rounded-full flex items-center justify-center shadow-md border-2
-                  transition-all duration-300
-                  ${isExpanded
-                    ? "bg-sky-500 text-white border-sky-400 shadow-sky-300 scale-125"
-                    : isRelated || isPulsing
-                    ? "bg-sky-50 text-sky-600 border-sky-300 animate-pulse scale-110"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-sky-300 hover:text-sky-500"
-                  }
-                `}>
+                {/* Círculo del nodo — sólo transition de colores, nunca de transform */}
+                <div
+                  className={[
+                    "w-12 h-12 rounded-full flex items-center justify-center shadow-md border-2 transition-colors duration-300",
+                    isExpanded
+                      ? "bg-sky-500 text-white border-sky-400 shadow-sky-300 scale-125"
+                      : isRelated || isPulsing
+                      ? "bg-sky-50 text-sky-600 border-sky-300 animate-pulse scale-110"
+                      : "bg-white text-slate-600 border-slate-200 hover:border-sky-300 hover:text-sky-500",
+                  ].join(" ")}
+                >
                   <Icon size={18} />
                 </div>
 
-                {/* Label */}
-                <div className={`
-                  absolute top-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold tracking-wide transition-all duration-300
-                  ${isExpanded ? "text-sky-600" : "text-slate-500"}
-                `}>
+                {/* Etiqueta */}
+                <div
+                  className={[
+                    "absolute top-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold tracking-wide transition-colors duration-300",
+                    isExpanded ? "text-sky-600" : "text-slate-500",
+                  ].join(" ")}
+                >
                   {item.title}
                 </div>
 
                 {/* Badge numérico */}
-                <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-sky-500 text-white text-[10px] font-black flex items-center justify-center shadow-sm">
+                <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-sky-500 text-white text-[10px] font-black flex items-center justify-center shadow-sm pointer-events-none">
                   {item.id}
                 </div>
               </div>
@@ -182,7 +207,7 @@ export default function RadialOrbitalTimeline({
         </div>
       </div>
 
-      {/* Tarjeta fija debajo del orbital — siempre visible, nunca se corta */}
+      {/* Tarjeta de detalle — debajo del orbital, nunca se corta */}
       <div className="px-4 max-w-lg mx-auto mt-2 min-h-[180px]">
         {activeItem ? (
           <div className="bg-white border border-slate-200 rounded-2xl shadow-xl shadow-sky-100/40 p-5 animate-in fade-in slide-in-from-bottom-2 duration-300">
@@ -201,7 +226,7 @@ export default function RadialOrbitalTimeline({
                 </div>
               </div>
               <button
-                onClick={closeCard}
+                onClick={resetAll}
                 className="w-6 h-6 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0"
               >
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">

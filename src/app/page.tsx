@@ -65,9 +65,9 @@ function SectionPill({ children }: { children: React.ReactNode }) {
 const TIMELINE_DATA: TimelineItem[] = [
   { id: 1, title: "Detección Sensorial", content: "El micrófono MEMS captura tu patrón de ronquido en menos de 300 ms, incluso en entornos ruidosos.", icon: Eye, relatedIds: [2] },
   { id: 2, title: "Análisis IA", content: "El motor de IA clasifica el tipo de ronquido (obstructivo, posicional o nasal) y determina la respuesta necesaria. Aprende de ti cada noche.", icon: Brain, relatedIds: [1, 3] },
-  { id: 3, title: "Conducción Ósea", content: "Micro-impulsos de 20–50 Hz viajan por el hueso mandibular. Completamente imperceptibles durante el sueño.", icon: Radio, relatedIds: [2, 4] },
-  { id: 4, title: "Apertura Vías", content: "La vibración reposiciona los tejidos que colapsan durante el ronquido, abriendo la vía aérea de forma natural.", icon: Wind, relatedIds: [3, 5] },
-  { id: 5, title: "Reporte App", content: "Cada mañana recibes un informe con fases de sueño, eventos corregidos y tu puntuación Nulbia.", icon: BarChart3, relatedIds: [1, 4] },
+  { id: 3, title: "Estimulación EMS", content: "Impulsos de frecuencia media (10Hz - 1500Hz) activan los músculos de la garganta para abrir las vías respiratorias de forma automática e imperceptible.", icon: Radio, relatedIds: [2, 4] },
+  { id: 4, title: "Apertura Vías", content: "La Estimulación Muscular Electrónica (EMS) reactiva los tejidos que colapsan durante el ronquido, abriendo la vía aérea de forma natural.", icon: Wind, relatedIds: [3, 5] },
+  { id: 5, title: "Sincronización Sleeplus", content: "Sincroniza tus datos vía Bluetooth con la App Sleeplus para monitorizar tus ronquidos, fases del sueño y reportes de calidad respiratoria.", icon: BarChart3, relatedIds: [1, 4] },
 ];
 
 const TESTIMONIALS = [
@@ -86,14 +86,14 @@ const OBJECTIONS = [
   {
     icon: <Smile className="w-5 h-5" />,
     title: "¿Es incómodo llevarlo?",
-    description: "Solo 11 gramos. El diseño ergonómico mandibular se adapta a cualquier postura de sueño. El 94% de los usuarios dice no notarlo después de la primera noche.",
-    stat: "11g",
+    description: "Solo 11.6 gramos. El diseño ergonómico mandibular se adapta a cualquier postura de sueño. El 94% de los usuarios dice no notarlo después de la primera noche.",
+    stat: "11.6g",
     statLabel: "Peso ultraligero",
   },
   {
     icon: <Zap className="w-5 h-5" />,
     title: "¿Realmente funciona?",
-    description: "Tecnología TENS + EMA con chip IA. 97% de eficacia clínica demostrada. Resultados visibles desde la primera noche en el 89% de los casos.",
+    description: "Estimulación Muscular Electrónica (EMS) con impulsos de frecuencia media (10Hz - 1500Hz). 97% de eficacia clínica demostrada. Resultados visibles desde la primera noche en el 89% de los casos.",
     stat: "97%",
     statLabel: "Eficacia clínica",
   },
@@ -130,7 +130,7 @@ export default function NulbiaLanding() {
           <FadeUp>
             <div className="inline-flex items-center gap-2 bg-sky-50 border border-sky-200 text-sky-700 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6">
               <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse inline-block" />
-              Monitor Biométrico de Sueño con IA
+              Solución avanzada para el tratamiento de ronquidos
             </div>
 
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight leading-[1.05] mb-6">
@@ -180,7 +180,7 @@ export default function NulbiaLanding() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/15 via-transparent to-transparent pointer-events-none" />
               <div className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-1.5 text-xs font-bold text-slate-700 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-                Conducción ósea en acción
+                Estimulación EMS en acción
               </div>
             </div>
           </FadeUp>
@@ -210,7 +210,7 @@ export default function NulbiaLanding() {
                 El favorito de las parejas
               </h2>
               <p className="mt-3 text-slate-500 max-w-md mx-auto">
-                El 68% de nuestros clientes eligen el Pack Pareja. Dos dispositivos, el doble de descanso.
+                El 68% de nuestros clientes eligen el Pack Pareja. Dos estimuladores, el doble de descanso.
               </p>
             </div>
           </FadeUp>
@@ -270,10 +270,10 @@ export default function NulbiaLanding() {
                 <div className="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/30 text-sky-300 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse inline-block" />Tecnología exclusiva
                 </div>
-                <h2 className="text-3xl font-black text-white leading-tight">Doble pulso automático.<br /><span className="text-sky-400">Respira sin esfuerzo.</span></h2>
-                <p className="text-slate-400 text-sm leading-relaxed">TENS + EMA de doble pulso detecta el ronquido y aplica micro-impulsos que tensan los músculos de la garganta, abriendo la vía aérea automáticamente.</p>
+                <h2 className="text-3xl font-black text-white leading-tight">Estimulación EMS automática.<br /><span className="text-sky-400">Respira sin esfuerzo.</span></h2>
+                <p className="text-slate-400 text-sm leading-relaxed">La Estimulación Muscular Electrónica (EMS) con impulsos de frecuencia media (10Hz - 1500Hz) detecta el ronquido y activa los músculos de la garganta para abrir las vías respiratorias automáticamente.</p>
                 <div className="grid grid-cols-2 gap-3">
-                  {[{v:"TENS",d:"Estimulación transcutánea"},{v:"EMA",d:"Avance mandibular"},{v:"IA",d:"Chip inteligencia artificial"},{v:"Auto",d:"Intensidad adaptativa"}].map((s) => (
+                  {[{v:"EMS",d:"Estimulación muscular electrónica"},{v:"10–1500Hz",d:"Rango de frecuencia media"},{v:"IA",d:"Chip inteligencia artificial"},{v:"Auto",d:"Intensidad adaptativa"}].map((s) => (
                     <div key={s.v} className="bg-white/5 border border-white/10 rounded-xl p-3">
                       <p className="text-sky-400 font-black text-lg">{s.v}</p>
                       <p className="text-slate-400 text-xs mt-0.5">{s.d}</p>
@@ -282,7 +282,7 @@ export default function NulbiaLanding() {
                 </div>
               </div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/40 order-1 md:order-2 group">
-                <img src="/producto-3.jpg" alt="Tecnología TENS+EMA" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src="/producto-3.jpg" alt="Tecnología EMS Nulbia" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
             </div>
           </FadeUp>
@@ -359,9 +359,9 @@ export default function NulbiaLanding() {
           </FadeUp>
           <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto items-center">
             {[
-              { name:"1 Unidad",     price:149, originalPrice:199, packKey:"individual", description:"Para ti · Prueba sin riesgo",     popular:false, buttonText:"Probar Nulbia",      includes:["1 dispositivo Nulbia Sleep Pro","App con IA personalizada","Seguimiento de calidad de sueño","30 noches de garantía total","Soporte prioritario por chat","Carga magnética inalámbrica"] },
-              { name:"Pack Pareja",  price:249, originalPrice:458, packKey:"pareja",     description:"2 unidades · El más elegido",     popular:true,  buttonText:"Pedir Pack Pareja",  includes:["2 dispositivos Nulbia Sleep Pro","App para ambos con sincronía","Panel de pareja en tiempo real","30 noches de garantía total","Envío express gratuito 24h","Soporte VIP prioritario","Ahorra 209€ vs 2 unidades"] },
-              { name:"Pack Familiar",price:349, originalPrice:597, packKey:"familiar",   description:"3 unidades · Toda la familia",   popular:false, buttonText:"Pedir Pack Familiar",includes:["3 dispositivos Nulbia Sleep Pro","App familiar multiusuario","Historial de sueño 12 meses","30 noches de garantía total","Envío express gratuito 24h","Soporte VIP + línea directa","Ahorra 248€ vs 3 unidades"] },
+              { name:"1 Unidad",     price:149, originalPrice:199, packKey:"individual", description:"Para ti · Prueba sin riesgo",     popular:false, buttonText:"Probar Nulbia",      includes:["1 estimulador Nulbia Sleep Pro","Sleeplus App (iOS 9.0+ / Android 4.3+)","Seguimiento de calidad de sueño","30 noches de garantía total","Soporte prioritario por chat","Batería +15h · Base de carga incluida"] },
+              { name:"Pack Pareja",  price:249, originalPrice:458, packKey:"pareja",     description:"2 unidades · El más elegido",     popular:true,  buttonText:"Pedir Pack Pareja",  includes:["2 estimuladores Nulbia Sleep Pro","Sleeplus App para ambos","Panel de pareja en tiempo real","30 noches de garantía total","Envío express gratuito 24h","Soporte VIP prioritario","Ahorra 209€ vs 2 unidades"] },
+              { name:"Pack Familiar",price:349, originalPrice:597, packKey:"familiar",   description:"3 unidades · Toda la familia",   popular:false, buttonText:"Pedir Pack Familiar",includes:["3 estimuladores Nulbia Sleep Pro","Sleeplus App multiusuario","Historial de sueño 12 meses","30 noches de garantía total","Envío express gratuito 24h","Soporte VIP + línea directa","Ahorra 248€ vs 3 unidades"] },
             ].map((plan, i) => (
               <PricingCard key={i} plan={plan} index={i} />
             ))}
@@ -396,10 +396,10 @@ export default function NulbiaLanding() {
         <div className="space-y-3">
           {[
             { q:"¿Cuánto tarda en funcionar?", a:"El 89% nota resultados desde la primera noche. Para el 97% la mejora es total antes de los 7 días." },
-            { q:"¿Es cómodo de llevar puesto?", a:"Pesa 11g y tiene diseño ergonómico certificado para ser imperceptible en cualquier postura de sueño." },
+            { q:"¿Es cómodo de llevar puesto?", a:"Pesa 11.6g y tiene diseño ergonómico certificado para ser imperceptible en cualquier postura de sueño." },
             { q:"¿Funciona para la apnea del sueño?", a:"Nulbia está diseñado para ronquidos habituales y apnea leve. Para apnea severa consulta con un especialista." },
             { q:"¿Cómo funciona la garantía de 30 noches?", a:"Escríbenos a soporte@nulbia.com dentro de los 30 días. Gestionamos la devolución en menos de 48 horas." },
-            { q:"¿Cuánto dura la batería?", a:"Una semana de uso nocturno. Se carga en 45 minutos con el estuche de carga magnética incluido." },
+            { q:"¿Cuánto dura la batería?", a:"Más de 15 horas de uso continuo. Se carga en 2 horas mediante la base de carga incluida." },
           ].map((faq, i) => (
             <FadeUp key={i} index={i}>
               <details className="group bg-white border border-slate-100 rounded-2xl shadow-sm hover:border-sky-100 transition-colors">
@@ -411,6 +411,88 @@ export default function NulbiaLanding() {
               </details>
             </FadeUp>
           ))}
+        </div>
+      </section>
+
+      {/* ¿QUÉ ES NULBIA? — Transparencia */}
+      <section className="bg-white border-t border-slate-100 py-20">
+        <div className="max-w-4xl mx-auto px-6">
+
+          {/* Cabecera */}
+          <FadeUp>
+            <div className="text-center mb-14">
+              <SectionPill>Transparencia total</SectionPill>
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mt-1">
+                ¿Qué es Nulbia?
+              </h2>
+              <p className="mt-4 text-slate-500 max-w-xl mx-auto leading-relaxed">
+                Creemos que mereces saber exactamente quién hay detrás del producto que confías para mejorar tu descanso.
+              </p>
+            </div>
+          </FadeUp>
+
+          {/* Grid 2×2 */}
+          <div className="grid sm:grid-cols-2 gap-5">
+            {[
+              {
+                icon: <Eye className="w-5 h-5" />,
+                label: "El Concepto",
+                title: "Nace de una necesidad real",
+                body: "Nulbia nace de una necesidad real: encontrar soluciones tecnológicas que de verdad funcionen para mejorar el descanso.",
+              },
+              {
+                icon: <Brain className="w-5 h-5" />,
+                label: "Nuestra Función",
+                title: "Curadores de tecnología, no fabricantes",
+                body: "No somos un laboratorio médico, somos curadores de tecnología. Identificamos los estimuladores biométricos más avanzados del mercado y los ponemos a tu alcance con nuestra garantía y soporte.",
+              },
+              {
+                icon: <Zap className="w-5 h-5" />,
+                label: "El Producto",
+                title: "Selección rigurosa y probada",
+                body: "Hemos seleccionado este Estimulador Muscular Electrónico inteligente por su eficacia probada mediante tecnología EMS de frecuencia media (10Hz – 1500Hz).",
+              },
+              {
+                icon: <Shield className="w-5 h-5" />,
+                label: "Nuestro Compromiso",
+                title: "Respaldo total en el post-venta",
+                body: "En Nulbia nos responsabilizamos de todo el proceso post-venta: garantía de 30 noches y atención al cliente, para que tú solo te centres en recuperar tu energía.",
+              },
+            ].map((item, i) => (
+              <FadeUp key={i} index={i}>
+                <div className="flex gap-5 p-7 rounded-2xl border border-slate-100 bg-slate-50/60 hover:border-sky-100 hover:bg-sky-50/30 transition-colors group h-full">
+                  {/* Icono */}
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-white border border-slate-200 group-hover:border-sky-200 group-hover:bg-sky-50 flex items-center justify-center text-slate-400 group-hover:text-sky-500 transition-colors shadow-sm">
+                    {item.icon}
+                  </div>
+                  {/* Texto */}
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-bold text-sky-500 uppercase tracking-widest mb-1">
+                      {item.label}
+                    </p>
+                    <h3 className="text-sm font-bold text-slate-900 mb-2 leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-slate-500 leading-relaxed">
+                      {item.body}
+                    </p>
+                  </div>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+
+          {/* Cierre honesto */}
+          <FadeUp index={4}>
+            <div className="mt-10 flex items-start gap-4 p-6 rounded-2xl bg-slate-900 text-white">
+              <div className="flex-shrink-0 w-1 self-stretch rounded-full bg-sky-500" />
+              <p className="text-sm leading-relaxed text-slate-300">
+                <span className="font-bold text-white">Sin letra pequeña.</span>{" "}
+                Si el estimulador no elimina tus ronquidos en 30 noches, te devolvemos cada céntimo. Sin formularios, sin excusas. Ese es el único compromiso que importa.
+              </p>
+            </div>
+          </FadeUp>
+
         </div>
       </section>
 
@@ -473,12 +555,7 @@ function PricingCard({ plan, index }: { plan: any; index: number }) {
       {/* Link con ?pack= para preseleccionar la variante en la PDP */}
       <Link href={`/producto?pack=${plan.packKey}`} className="w-full mb-6">
         <span
-          className={cn(
-            "w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5",
-            plan.popular
-              ? "bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200"
-              : "bg-slate-100 hover:bg-slate-200 text-slate-900"
-          )}
+          className="w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5 bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-200"
         >
           {plan.buttonText}
         </span>
@@ -487,11 +564,8 @@ function PricingCard({ plan, index }: { plan: any; index: number }) {
         <ul className="space-y-2.5">
           {plan.includes.map((f: string, fi: number) => (
             <li key={fi} className="flex items-start gap-2.5">
-              <div className={cn(
-                "mt-0.5 w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0",
-                plan.popular ? "bg-sky-500" : "bg-slate-100"
-              )}>
-                <Check className={cn("w-2.5 h-2.5", plan.popular ? "text-white" : "text-sky-500")} />
+              <div className="mt-0.5 w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 bg-sky-500">
+                <Check className="w-2.5 h-2.5 text-white" />
               </div>
               <span className="text-xs text-slate-600">{f}</span>
             </li>

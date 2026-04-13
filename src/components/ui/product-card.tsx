@@ -28,7 +28,7 @@ export function ProductCard({
   isBestSeller = true,
   packKey = "pareja",
   includes = [
-    "2 dispositivos Nulbia Sleep Pro™",
+    "2 estimuladores Nulbia Sleep Pro™",
     "App con panel de pareja en tiempo real",
     "Historial de sueño 30 días",
     "Envío express gratuito 24h",

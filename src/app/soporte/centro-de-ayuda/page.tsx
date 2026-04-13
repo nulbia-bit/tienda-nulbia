@@ -7,9 +7,9 @@ export default function CentroAyudaPage() {
     <LegalPageLayout title="Centro de Ayuda (FAQ)">
       <h2>¿Cómo funciona Nulbia Sleep Pro?</h2>
       <p>
-        Utiliza un sensor de alta precisión que detecta el ronquido mediante conducción ósea. Al
-        activarse, emite micro-vibraciones TENS+EMA que tensan suavemente los músculos de la
-        garganta para abrir las vías respiratorias.
+        Utiliza un sensor de alta precisión que detecta el ronquido. Al activarse, la Estimulación
+        Muscular Electrónica (EMS) emite impulsos de frecuencia media (10Hz - 1500Hz) que activan
+        los músculos de la garganta para abrir las vías respiratorias.
       </p>
 
       <h2>¿Por qué en la caja pone "Snore Circle"?</h2>

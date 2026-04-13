@@ -8,7 +8,7 @@ import { ProductoClient } from "./ProductoClient";
 export const metadata = {
   title: "Nulbia Sleep Pro — Elimina los ronquidos desde la primera noche",
   description:
-    "Tecnología de conducción ósea con IA biométrica. 98% de eficacia. 30 noches de garantía total. Envío gratis en 24h.",
+    "Tecnología EMS (Estimulación Muscular Electrónica) con IA biométrica. 98% de eficacia. 30 noches de garantía total. Envío gratis en 24h.",
 };
 
 export default function ProductoPage() {

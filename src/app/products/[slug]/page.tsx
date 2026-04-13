@@ -24,7 +24,7 @@ const PRODUCTS = {
   "sleep-pro": {
     slug: "sleep-pro",
     name: "Nulbia Sleep Pro",
-    tagline: "Elimina los ronquidos con IA + conducción ósea",
+    tagline: "Estimulador Muscular Electrónico inteligente · Solución avanzada para el tratamiento de ronquidos",
     price: 149,
     originalPrice: 229,
     variantId: VARIANT_IDS.oneUnit,
@@ -96,10 +96,10 @@ type Slug = keyof typeof PRODUCTS;
 const BENTO_ITEMS = [
   {
     icon: <Brain className="h-5 w-5" />,
-    highlight: "IA",
-    title: "Inteligencia Artificial Biométrica",
+    highlight: "EMS",
+    title: "Estimulación Muscular Electrónica",
     description:
-      "Aprende tu patrón de sueño y ajusta la estimulación ósea en tiempo real para máxima eficacia.",
+      "Impulsos de frecuencia media (10Hz - 1500Hz) activan los músculos de la garganta para abrir las vías respiratorias automáticamente.",
   },
   {
     icon: <Moon className="h-5 w-5" />,
@@ -113,14 +113,14 @@ const BENTO_ITEMS = [
     highlight: "-36dB",
     title: "Silencio garantizado",
     description:
-      "La conducción ósea detiene los ronquidos sin despertar al usuario ni a su pareja.",
+      "La estimulación EMS detiene los ronquidos sin despertar al usuario ni a su pareja.",
   },
   {
     icon: <Activity className="h-5 w-5" />,
-    highlight: "7h",
+    highlight: "15h+",
     title: "Batería ultralarga",
     description:
-      "Carga completa en 60 minutos y aguanta toda la noche sin interrupción.",
+      "Más de 15 horas de uso continuo. Se carga en 2 horas mediante la base de carga incluida.",
   },
   {
     icon: <Zap className="h-5 w-5" />,
@@ -153,9 +153,9 @@ const HOW_IT_WORKS = [
   },
   {
     number: 3,
-    title: "La conducción ósea actúa",
+    title: "La estimulación EMS actúa",
     description:
-      "Una microestimulación imperceptible relaja los tejidos de la garganta y elimina el ronquido al instante.",
+      "La Estimulación Muscular Electrónica (EMS) activa los músculos de la garganta con impulsos de 10Hz - 1500Hz, abriendo las vías respiratorias al instante.",
   },
   {
     number: 4,
@@ -214,17 +214,17 @@ const FAQ_ITEMS = [
   {
     question: "¿Nulbia funciona desde la primera noche?",
     answer:
-      "El 94% de los usuarios reportan una reducción significativa de ronquidos desde la primera noche. El dispositivo comienza a aprender tu patrón de sueño desde el primer uso y mejora con el tiempo.",
+      "El 94% de los usuarios reportan una reducción significativa de ronquidos desde la primera noche. El estimulador comienza a aprender tu patrón de sueño desde el primer uso y mejora con el tiempo.",
   },
   {
     question: "¿Es incómodo dormir con él puesto?",
     answer:
-      "No. El dispositivo pesa menos de 12 gramos y se diseñó para ser completamente olvidado durante el sueño. La mayoría de usuarios dicen que en 2-3 noches no lo notan en absoluto.",
+      "No. El estimulador pesa 11.6 gramos y se diseñó para ser completamente olvidado durante el sueño. La mayoría de usuarios dicen que en 2-3 noches no lo notan en absoluto.",
   },
   {
-    question: "¿Cómo funciona exactamente la conducción ósea?",
+    question: "¿Cómo funciona exactamente la tecnología EMS?",
     answer:
-      "La conducción ósea transmite microvibraciones a través del cartílago nasal hasta los tejidos blandos de la garganta. Esto produce una leve contracción muscular que abre la vía aérea sin despertar al usuario.",
+      "La Estimulación Muscular Electrónica (EMS) emite impulsos de frecuencia media (10Hz - 1500Hz) que activan los músculos de la garganta para mantener abiertas las vías respiratorias sin despertar al usuario.",
   },
   {
     question: "¿Qué pasa si no me funciona?",
@@ -239,7 +239,7 @@ const FAQ_ITEMS = [
   {
     question: "¿Cuánto dura la batería y cómo se carga?",
     answer:
-      "La batería dura entre 7 y 9 horas, suficiente para una noche completa. Se carga mediante USB-C en unos 60 minutos. El cable y cargador están incluidos.",
+      "Más de 15 horas de uso continuo. Se carga en 2 horas mediante la base de carga incluida.",
   },
 ];
 

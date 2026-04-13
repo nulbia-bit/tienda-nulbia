@@ -16,7 +16,7 @@ export const NavbarHero: React.FC<NavbarHeroProps> = ({
   brandName = "NULBIA",
   heroTitle = "Descanso Profundo.\nSin Ronquidos.",
   heroSubtitle = "Monitor Biométrico de Sueño",
-  heroDescription = "La primera neurotecnología wearable que detecta y corrige la apnea leve mediante IA y conducción ósea. Sin cirugía. Sin pastillas.",
+  heroDescription = "La primera neurotecnología wearable que detecta y corrige la apnea leve mediante IA y Estimulación Muscular Electrónica (EMS). Sin cirugía. Sin pastillas.",
   videoUrl = "/producto.mp4",
 }) => {
   const [isVideoPaused, setIsVideoPaused] = useState(false);
@@ -165,7 +165,7 @@ export const NavbarHero: React.FC<NavbarHeroProps> = ({
           {/* Badge */}
           <div className="absolute top-5 left-5 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-1.5 shadow-sm text-xs font-bold text-slate-700">
             <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-            Conducción ósea en acción
+            Estimulación EMS en acción
           </div>
         </motion.div>
       </section>
